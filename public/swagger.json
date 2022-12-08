@@ -1,0 +1,29 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "code-verifier",
+		"version": "1.0.0",
+		"description": "Backend Express TS Swagger",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "@obelisk02"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

@@ -1,0 +1,90 @@
+npm i -D typescript @types/express @types/node
+
+npx tsc --init // Crear el init typescript
+
+// configurar el tsconfig enable algunas configs options
+// copia como la tienes
+
+
+Para correr el TS , generarlo y correrlo --> nodemon 
+npm i -D concurrently
+
+
+//WEbpack
+npm i -D webpack webpack-cli webpack-node-externals webpack-shell-plugin
+
+// eslint JEST
+npm i -D eslint jest ts-jest @types/jest supertest
+
+//Generar la configuracion de Eslint
+npx eslint --init
+- usar tercera opcion
+
+
+//Generar configuracion de JEST
+npx jest --init
+-crear una carpeta __tests__
+-crear el archivo example.spec.ts
+
+instalar npm i -D serve 
+- para poder ver el coverage a nivel server? 
+- anadirlo a config package.json
+
+npm i tsnode
+correrlo con npm run test
+
+GIT
+git add .
+git status
+git commit -m "first commit"
+git push
+
+
+// Se esta ejecutando el yml de prueba, Checar en gitlab el pipeline hace un test (ocupo meter tarjeta de credito)
+- hizo un cambio al gitlab .yml 
+
+
+
+// Crear en -> utils/loggers.ts 
+- Un log que imprime message
+
+// Crea -> controller/interfaces/index.ts 
+- definir la estructura del comportamiento
+
+//  controller/types/index.ts 
+- Definir la estructura del objeto (para no usar Any) Definir la estructura message personalidzado
+
+// HelloController
+- es el controller main que se encarga de tirar las acciones, el types y interface son atachments para hacerlo bien(?)
+
+//Routes
+crea el helloRouter
+crea index.ts routes -> gestiona el root de routes
+
+//server
+crea el index.ts del Server
+-CORS
+    npm i cors helmet
+    npm i --save-dev @types/cors
+
+
+// MongoDB
+descargar mongo compass
+descargar mongo server
+- npm i mongoose
+
+//webpack
+ya instalado npm i 
+crear archivo webpack.config.js
+instala ts loader npm i -D ts-loader
+
+en package.json el script 'build' ahora es para webpack, se va: 'npx tsc'
+
+//documentar swagger
+- npm i -D @types/swagger-jsdoc @types/swagger-ui-express
+- npm i --save swagger-jsdoc swagger-ui-express
+- npm i tsoa  //generar un json swagger que genera html
+
+crear archivo tsoa.json
+crear en package.json el script "swagger" : genera archivo swagger -- en Dev agrega el comando swagger
+
