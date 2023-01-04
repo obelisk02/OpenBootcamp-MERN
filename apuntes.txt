@@ -86,5 +86,11 @@ en package.json el script 'build' ahora es para webpack, se va: 'npx tsc'
 - npm i tsoa  //generar un json swagger que genera html
 
 crear archivo tsoa.json
-crear en package.json el script "swagger" : genera archivo swagger -- en Dev agrega el comando swagger
+crear en package.json el script "swagger": "tsoa spec" : genera archivo swagger -- en Dev agrega el comando swagger
 
+
+// Instalar mongo server 
+C:\Program Files\MongoDB\Server\6.0\data\
+
+despues de una explicacion de mongodb y index
+Crear carpeta domain, hexagonal - crear entities donde iran los modelos, carpeta orm y carpeta repositores que es la conexion
