@@ -94,3 +94,44 @@ C:\Program Files\MongoDB\Server\6.0\data\
 
 despues de una explicacion de mongodb y index
 Crear carpeta domain, hexagonal - crear entities donde iran los modelos, carpeta orm y carpeta repositores que es la conexion
+
+//video 4
+- importar swagger en server y corregirlo
+ -- tsoa.json linea 4 - "controllerPathGlobs": "src/**/*Controller.ts",
+ package linea 10 no inclui nodemon "nodemon -x tsoa spec"
+
+- conexion a mongodb desde index.ts
+- Enseña a usar el mongo shell, -help -Mongo -use codeverfication -db.Users.find()
+    Material de lectura mongo
+    https://drive.google.com/drive/folders/1bqkuylz0xU5YvAktsOO-Gr2bVaLepoEx   
+
+//video 5
+- Sigue añadiendo entidades, el orm User y UserController y UserRouter
+- Crea la ruta para users "/api/users" 
+- en el index añades la ruta de /users
+
+generar (get user by id):
+    - Crear interface en IUserController (getUserById)
+    - Ir a orm y generar la funcion de la bd (export const getUserById)
+    - Ir al controller (public async getUserByID) y generar la obtencion id y hacer el response
+    - EL WEY lo fuciona buscar id con getall si le llega un id a esa route
+    - Importarla en Usercontroller 
+
+borrar usuario
+    - Crear interface en IUserController (deleteUser)
+    - Otra vez el wey fusiona cosas, crea la ruta .delete con la misma ("/")
+    - Crea orm (deleteone)
+    - Controller generar el delete usuarios
+    - Ir a la ruta a editar bien la funcion de delete
+    - Crear interface dentro de IUser (deleteUSer)
+
+create user
+    - Crea interface (createUser)
+    - añadirlo al Usercontroller (createUser)
+    - crear el orm
+    - añadir el router POST
+    - RECUERDA cambiar el req.params por req.body (no pasarlos por parametros)
+
+update user
+    - lo mismo padre tu puedes
+

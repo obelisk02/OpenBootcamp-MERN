@@ -6,13 +6,27 @@ import express, {Express, Request, Response} from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-// TODO: HTTPS
+// Swagger
+import  SwaggerUi  from 'swagger-ui-express';
 
 // Root routes
 import rootRouter from '../routes'
+import mongoose from 'mongoose';
 
 
 const server: Express = express();
+
+// * Swagger config and route
+server.use(
+    '/docs', 
+    SwaggerUi.serve,
+    SwaggerUi.setup(undefined, {
+        swaggerOptions: {
+            url: "/swagger.json",
+            explorer: true
+        }
+    })
+)
 
 
 //Define server to use '/api' and use rootRouter from 'index.ts' in routes
@@ -24,6 +38,13 @@ server.use(express.static('public'));
 
 
 // TODO: MONO mongoose
+mongoose.set('strictQuery', true);
+mongoose.connect('mongodb://localhost:27017/codeverification')
+
+mongoose.connection.on('connected', () => {
+    console.log('connected');
+    console.log(mongoose.connection.readyState); //logs 1
+  });
 
 //Seguridad 
 server.use(helmet());
@@ -36,6 +57,8 @@ server.use(express.urlencoded({
 }))
 
 server.use(express.json({ limit:'50mb'}))
+
+
 
 //Redireccionar locahost:3000 --> localhost:3000/api
 server.get('/', (req: Request, res: Response) =>{
