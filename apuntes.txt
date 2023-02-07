@@ -135,3 +135,34 @@ create user
 update user
     - lo mismo padre tu puedes
 
+
+VIDEO 6 -- JWT
+
+crear archivo IUser interface en carpeta domain/interface
+    - Ya teniendo el esquema crea 2do esquema mongoose en User.entities.ts (Actualiza el schema original user y lo comenta)
+
+edicion de responses http 200 500
+    - en USerRouter cambios al return response
+
+cambiar req.params por req.body
+    - en router cambios (Hay un problema que recibe undefined como valor en req.name)
+
+instalar jwt npm i --save bcrypt jsonwebtoken bcryptjs / sus types npm i -D @types/bcryptjs   @types/jsonwebtoken 
+
+MIDDLEWARES
+    crear middleware verifytoken en carpeta middleware
+
+crea un orm de Register/Login user
+
+crear ruta /auth en router
+    .post
+    - crea la interface IAuthController
+    - crear archivo auth
+    - moverlo en un nuevo archivo Authrouter
+    - logout controller
+    - en el orm, al obtener el findOne con el email hacemos la comparacion del bcrypt y si es correcta la pass se crea el token jwt
+    - crear las rutas /auth en INDEX
+
+
+
+

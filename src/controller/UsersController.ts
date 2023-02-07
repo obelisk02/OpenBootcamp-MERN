@@ -53,6 +53,7 @@ export class UserController implements IUserController {
             LogSuccess(`[/api/users] Delete user id - ${id}`)
             await deleteUserByID(id).then((r) =>{
                 response = {
+                    status: 204,
                     message: `Success - Delete user ${id}`
                 }
             })
@@ -60,6 +61,7 @@ export class UserController implements IUserController {
         else {
             LogWarning("[/api/users] Delete user without ID request")
             response = {
+                status: 400,
                 message: `No id in request`
             }
         }

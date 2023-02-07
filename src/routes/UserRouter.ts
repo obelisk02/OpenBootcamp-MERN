@@ -1,7 +1,9 @@
 
-import express, {Request, Response} from 'express';
+import express, {Request, Response, Router} from 'express';
 import { UserController } from '../controller/UsersController';
-import { LogInfo } from '../utils/loggers'; 
+import { LogInfo, LogSuccess } from '../utils/loggers'; 
+import { IUser } from '../domain/interfaces/IUser.interface';
+import bcrypt from 'bcrypt';
 
 //Router from express
 let usersRouter = express.Router();
@@ -19,7 +21,7 @@ usersRouter.route('/')
         const response: any = await  controller.getUsers(id)
 
         //send res to client
-        return res.send(response)
+        return res.status(200).send(response)
     })
     
 
@@ -34,7 +36,7 @@ usersRouter.route('/')
         const response: any = await  controller.deleteUser(id)
 
         //send res to client
-        return res.send(response)
+        return res.status(200).send(response)
     })
 
     //POST
@@ -42,6 +44,9 @@ usersRouter.route('/')
         const controller: UserController = new UserController();
         //const {name, email, age} = req.body
         const {name, email, age}: any = req?.query;
+        let name2: any = req?.body?.name
+        LogSuccess(`name of body: ${name2}`)
+    
         let user = {
             name: name  ,
             email: email ,
@@ -55,7 +60,7 @@ usersRouter.route('/')
         const response: any = await  controller.createUser(user)
 
         //send res to client
-        return res.send(response)
+        return res.status(201).send(response)
     })
 
     .put( async (req: Request, res: Response)=> {
@@ -78,8 +83,10 @@ usersRouter.route('/')
         const response: any = await  controller.updateUser(id, user)
 
         //send res to client
-        return res.send(response)
+        return res.status(204).send(response)
     })
+
+
 
 
     export default usersRouter;
