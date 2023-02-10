@@ -3,10 +3,13 @@ import express, {Request, Response, Router} from 'express';
 import { UserController } from '../controller/UsersController';
 import { LogInfo, LogSuccess } from '../utils/loggers'; 
 import { IUser } from '../domain/interfaces/IUser.interface';
-import bcrypt from 'bcrypt';
+
 
 //Router from express
 let usersRouter = express.Router();
+
+import bodyParser  from 'body-parser'
+const jsonParser = bodyParser.json();
 
 // GET -> http:localhost:3000/api/users?id=1293823sdb
 usersRouter.route('/')
@@ -40,6 +43,7 @@ usersRouter.route('/')
     })
 
     //POST
+/*
     .post( async (req: Request, res: Response)=> {
         const controller: UserController = new UserController();
         //const {name, email, age} = req.body
@@ -53,15 +57,12 @@ usersRouter.route('/')
             age: age | 0
         }
   
-        //Controller Instance to execute method
-      
-
-        //obtain response
         const response: any = await  controller.createUser(user)
 
         //send res to client
         return res.status(201).send(response)
     })
+    */
 
     .put( async (req: Request, res: Response)=> {
         //Controller Instance to execute method

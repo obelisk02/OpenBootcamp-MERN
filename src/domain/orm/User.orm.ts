@@ -5,7 +5,11 @@ import { IAuth } from "../interfaces/IAuth.interface";
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-//CRUD
+
+import dotenv from 'dotenv';
+dotenv.config()
+
+const SECRET_JTW = process.env.SECRET_JWT || 'ENCRYPTTEXT123';
 
 /**
  * Method obtain all users
@@ -86,29 +90,36 @@ export const registerUser = async (user:IUser): Promise <any | undefined> => {
 export const loginUser = async (auth:IAuth): Promise <any | undefined> => {
     try {
         let userModel = userEntity();
-        userModel.findOne({email: auth.email}, (err: any, user: IUser) =>{
-            if(err){ //searching error
+        let userFound: IUser | undefined;
+        let token = undefined;
+         
+        await  userModel.findOne({email: auth.email}).then((user: IUser)=>{
+            userFound = user;
+            console.log(`[User found]`);
 
-            }
-            if(!user){ //user not found
+        }).catch((error) =>{
+            console.log(`[ERROR Authentication in ORM]: User not found`);
+            throw new Error (`[ERROR Authentication in ORM]: User not found`);
+        })
 
-            }
+        let validPassword = bcrypt.compareSync(auth.password, userFound!.password);
 
-            //bcrypt
-            let validPassword = bcrypt.compareSync(auth.password, user.password);
-            if (!validPassword) {  //wrong password Not authorized 401
-                //return response 
-            }
+        if (!validPassword) {  //wrong password Not authorized 401
+            console.log(`[ERROR Authentication password match]: Password isnt correct`);
+            throw new Error (`[ERROR Authentication password match]: Password not valid`);
+        }
 
-            // secret JWT en .env
-            let token = jwt.sign({email: user.email}, process.env.SECRET_JWT, {
-                expiresIn: 86400 //24 hr
-            })
+        token = jwt.sign({email: userFound!.email}, SECRET_JTW, {
+            expiresIn: 86400 //24 hr
         });
 
-   
+        return {
+            user: userFound,
+            token
+        }
+
     } catch (error) {
-   
+        LogError(`[ORM] Error Login- ${error}`)
     }
 }
 

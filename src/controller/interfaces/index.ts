@@ -19,7 +19,7 @@ export interface IUserController {
     deleteUser(id: string): Promise <any>
 
     //Crear
-    createUser(user: any): Promise <any>
+    //createUser(user: any): Promise <any>
 
     updateUser(id: string, user: any): Promise <any>
 }

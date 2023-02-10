@@ -4,7 +4,8 @@ import { LogSuccess, LogError, LogWarning  } from "../utils/loggers";
 import { IUser } from "../domain/interfaces/IUser.interface";
 import { IAuth } from "../domain/interfaces/IAuth.interface";
 
-import { registerUser, loginUser, logoutUser} from "../domain/orm/User.orm";
+import { registerUser, loginUser, logoutUser, getAllUsers, getUserByID} from "../domain/orm/User.orm";
+import { AuthResponse, ErrorResponse } from "./types";
 @Route("/api/auth")
 @Tags("AuthController")
 export class AuthController implements IAuthController{
@@ -16,9 +17,9 @@ export class AuthController implements IAuthController{
         if (user){
             
             await registerUser(user).then((r) =>{
-                LogSuccess(`[/api/auth/register] Register new user ${user}`);
+                LogSuccess(`[/api/auth/register] Register new user ${user.email}`);
                 response = {
-                    message: `User created successfully ${user.name}`
+                    message: `User created successfully ${user.email}`
                 }
             })
         }
@@ -35,26 +36,29 @@ export class AuthController implements IAuthController{
     @Post("/login")
     public async loginUser(auth: IAuth): Promise<any> {
 
-        let response: any = '';
+        let response: AuthResponse | ErrorResponse | undefined;
       
         if(auth){
-            await loginUser(auth).then((r) =>{
+           
                 LogSuccess(`[/api/auth/login] Login new user ${auth.email}`);
+                let data = await loginUser(auth);
+
+              
 
                 response = {
-                    message: `User logged successfully ${auth.email}`,
-                    token: r.token  //JWT generated for logged user
-                }
-            })
+                    message: `Welcome ${data.user.name}`,
+                    token: data.token  //JWT generated for logged user
+                }   
         }
         else {
             LogWarning(`[/api/auth/login] Login error no data (email, password)`);
             response = {
                 message: `Please provide a email and password`,   
-        }
-
-        return response;
+                error: '[Error auth] email and password needed'
+        }  
     }
+
+    return response;
     }
 
     @Post("/logout")
@@ -63,5 +67,26 @@ export class AuthController implements IAuthController{
     
 
     return response;
+    }
+
+    /**
+     * Endpoint to retrieve user's information
+     * Middleware: verifyToken
+     * Headers x-access-token needed with valid jwt
+     * @param {string} id 
+     * @returns all user data by id
+     */
+    @Get("/profile")
+    public async userData(@Query()id: string): Promise<any> {
+        let response: any = ""
+
+        if(id){
+            LogSuccess(`[/api/users] Get user id - ${id}`)
+            response = await getUserByID(id);
+
+            //remove password
+            response.password = ''
+        }
+        return response;
     }
 }

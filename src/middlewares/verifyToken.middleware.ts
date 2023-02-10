@@ -1,6 +1,8 @@
 import  jwt  from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-
+import dotenv from 'dotenv';
+dotenv.config();
+const SECRET_JWT= process.env.SECRET_JWT || 'ENCRYPTTEXT123';
 /**
  * 
  * @param {Request} Original request previous verify
@@ -12,16 +14,17 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) =>{
     //Check header from req for 'x-access-token'
     let token:any = req.headers['x-access-token'];
     
+    console.log(token)
     //verify if jwt exists
-    if (token!){
+    if (!token){
         return res.status(403).send({
             authentication: `Missing Jwt`,
-            message: `You dont have permission`
+            message: `Missing Token - You dont have permission`
         })
     }
 
     //Verify token
-    jwt.verify(token, '', (err: any, decoded: any)=>{
+    jwt.verify(token, SECRET_JWT, (err: any, decoded: any)=>{
         if(err){
             return res.status(500).send({
                 authentication: `JWT failed`,

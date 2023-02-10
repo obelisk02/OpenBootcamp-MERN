@@ -163,6 +163,19 @@ crear ruta /auth en router
     - en el orm, al obtener el findOne con el email hacemos la comparacion del bcrypt y si es correcta la pass se crea el token jwt
     - crear las rutas /auth en INDEX
 
+VIDEO 7 --- Probando JWT
+    npm i bodyparser    
+    npm i -D @types/body-parser
+    immportar e inicializar el body parser en cada router
+
+     "dev": "concurrently \"npx tsc --watch\" \"npm run swagger\" \"nodemon -q dist/index.js\" ",
+
+     crear una nueva type message de Auth en /controller/types
+        (Esto es para controlar las response de las rutas, darles un molde y no hacerlas de tipo "response: any")
+
+    crea un route de get info del usuario cuando esta logeado /auth/profile/id= , aqui usa el verifyToken para el logeo
+    -Eliminamos la ruta, controller e interface de Create user de los primeros /user
+
 
 
 

@@ -23,6 +23,7 @@ export class UserController implements IUserController {
         if(id){
             LogSuccess(`[/api/users] Get user id - ${id}`)
             response = await getUserByID(id);
+            response.password = '';
         }
         else {
             LogSuccess("[/api/users] Get all users request")
@@ -69,11 +70,9 @@ export class UserController implements IUserController {
         return response;
     }
 
-    /**
-     * 
-     * @param {string} user campos de data info del usuario
-     * @returns message succes created
-     */
+    
+ 
+    /*
     @Post("/")
     public async createUser(@Query()user: any): Promise<any> {
         
@@ -86,7 +85,9 @@ export class UserController implements IUserController {
             }
         })
         return response
-    }
+    } 
+
+    */
 
     /**
      * 

@@ -21,7 +21,7 @@ let rootRouter = express.Router()
 // GET /api
 rootRouter.get('/', (req: Request, res: Response) =>{
     LogInfo('GET: /api/')
-    res.send("Root api, welcome")
+    res.send("Root api, welcome @obelisk1996@gmail.com")
 })
 
 
