@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import dotenv from 'dotenv';
+import { UserResponse } from "../types/UserResponse";
 dotenv.config()
 
 const SECRET_JTW = process.env.SECRET_JWT || 'ENCRYPTTEXT123';
@@ -14,12 +15,30 @@ const SECRET_JTW = process.env.SECRET_JWT || 'ENCRYPTTEXT123';
 /**
  * Method obtain all users
  */
-export const getAllUsers =async (): Promise <any []| undefined> => {
+export const getAllUsers =async (page: number, limit:  number): Promise <any []| undefined> => {
     try {
         let userModel = userEntity();
-        
-        //Search all users
-        return await userModel.find({isDelete: false})
+
+        //let response: UserResponse 
+        let response : any = {}
+        //Limite y paginacion - search all users
+        await userModel.find({isDelete: false})
+            .select('email name age')
+            .limit(limit)
+            .skip((page - 1)* limit)
+            //.projection({email:1, name: 1, age: 1})
+            .exec(). then((users: IUser[])=>{
+                response.users = users;
+            })
+
+            // count total collections db
+            await userModel.countDocuments().then((total: number) =>{
+                response.totalPages = Math.ceil(total/ limit);  //numero de paginas que se generan - Redondeo
+                response.currentPage = page;
+            });
+
+            return response
+      
     } catch (error) {
         LogError(`[ORM error]: Getting all users: ${error}`)
     }
@@ -31,7 +50,7 @@ export const getUserByID = async (id: string): Promise <any | undefined> => {
         let userModel = userEntity();
         
         //Search all users
-        return await userModel.findById(id)
+        return await userModel.findById(id) .select('email name age')
     } catch (error) {
         LogError(`[ORM error]: Getting user id: ${error}`)
     }

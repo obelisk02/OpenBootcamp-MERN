@@ -12,22 +12,23 @@ export class UserController implements IUserController {
   
 
     /**
-     * 
+     * @param {number} page numero de pagina
+     * @param {number} limit limite de articulos por pagina
      * @param {string} id of user (optional)
      * @returns All users or specific user id
      */
     @Get("/")
-    public async getUsers(@Query()id?: string): Promise<any> {
+    public async getUsers(@Query() page: number , limit: number, id?: string): Promise<any> {
         let response: any = ""
 
         if(id){
             LogSuccess(`[/api/users] Get user id - ${id}`)
             response = await getUserByID(id);
-            response.password = '';
+            //response.password = '';
         }
         else {
             LogSuccess("[/api/users] Get all users request")
-            response = await getAllUsers();
+            response = await getAllUsers(page , limit);
         }
 
         return response;

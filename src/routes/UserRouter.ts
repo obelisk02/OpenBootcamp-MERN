@@ -3,32 +3,36 @@ import express, {Request, Response, Router} from 'express';
 import { UserController } from '../controller/UsersController';
 import { LogInfo, LogSuccess } from '../utils/loggers'; 
 import { IUser } from '../domain/interfaces/IUser.interface';
-
+import { verifyToken } from '../middlewares/verifyToken.middleware';
 
 //Router from express
 let usersRouter = express.Router();
 
 import bodyParser  from 'body-parser'
+
 const jsonParser = bodyParser.json();
 
 // GET -> http:localhost:3000/api/users?id=1293823sdb
 usersRouter.route('/')
-    .get(async (req: Request, res: Response)=>{
+    .get(verifyToken, async (req: Request, res: Response)=>{
         let id: any = req?.query?.id;
+        //pagination
+        let page: any = req?.query?.page || 1;
+        let limit: any = req?.query?.limit || 10;
         LogInfo(`Query Param ${id}`);
         
         //Controller Instance to execute method
         const controller: UserController = new UserController();
 
         //obtain response
-        const response: any = await  controller.getUsers(id)
+        const response: any = await  controller.getUsers(page, limit , id)
 
         //send res to client
         return res.status(200).send(response)
     })
     
 
-    .delete( async (req: Request, res: Response)=> {
+    .delete( verifyToken,async (req: Request, res: Response)=> {
         let id: any = req?.query?.id;
         LogInfo(`Query Delete Param ${id}`);
 
@@ -64,7 +68,7 @@ usersRouter.route('/')
     })
     */
 
-    .put( async (req: Request, res: Response)=> {
+    .put( verifyToken, async (req: Request, res: Response)=> {
         //Controller Instance to execute method
         const controller: UserController = new UserController();
 

@@ -10,7 +10,7 @@ export interface IHelloController {
 export interface IUserController {
 
     //Read all users db || obtain by id
-    getUsers(id?: string): Promise<any>
+    getUsers(page?: number , limit?: number, id?: string): Promise<any>
 
     //Find user by id FUSIONARON ARRIBA
     //getUserByID(id: string): Promise<any>

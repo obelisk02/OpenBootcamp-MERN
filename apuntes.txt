@@ -176,6 +176,10 @@ VIDEO 7 --- Probando JWT
     crea un route de get info del usuario cuando esta logeado /auth/profile/id= , aqui usa el verifyToken para el logeo
     -Eliminamos la ruta, controller e interface de Create user de los primeros /user
 
-
+VIDEO 8 --- Paginacion con mongoose
+    Cambiar el interface de IUser para que reciba paginacion como parametro
+    getAllUsers recibe page y limit
+    hacer la logica mongo limit() skip() exec()
+    hacer un type de Response
 
 
