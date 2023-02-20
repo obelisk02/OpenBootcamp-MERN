@@ -164,7 +164,7 @@ crear ruta /auth en router
     - crear las rutas /auth en INDEX
 
 VIDEO 7 --- Probando JWT
-    npm i bodyparser    
+    npm i body-parser    
     npm i -D @types/body-parser
     immportar e inicializar el body parser en cada router
 
