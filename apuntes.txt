@@ -183,3 +183,7 @@ VIDEO 8 --- Paginacion con mongoose
     hacer un type de Response
 
 
+VIDEO 9 --- Gestion de Relaciones Mongoose
+- "Katas" cada usuario podra crear uno , es un nuevo schema de mongoose 
+- Crear entity /domain (Kata.entity.ts)
+- Crear interface /interfaces (Kata.interface.ts)    -> dentro crea un Kata enum (enum son valores predefinidos, si no le das = su valor es 0,1,2)
