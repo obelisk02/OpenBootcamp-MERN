@@ -8,6 +8,8 @@ import jwt from 'jsonwebtoken';
 
 import dotenv from 'dotenv';
 import { UserResponse } from "../types/UserResponse";
+import { kataEntity } from "../entities/Kata.entity";
+import { IKata } from "../interfaces/Kata.interface";
 dotenv.config()
 
 const SECRET_JTW = process.env.SECRET_JWT || 'ENCRYPTTEXT123';
@@ -23,7 +25,7 @@ export const getAllUsers =async (page: number, limit:  number): Promise <any []|
         let response : any = {}
         //Limite y paginacion - search all users
         await userModel.find({isDelete: false})
-            .select('email name age')
+            .select('email name age katas')
             .limit(limit)
             .skip((page - 1)* limit)
             //.projection({email:1, name: 1, age: 1})
@@ -50,7 +52,7 @@ export const getUserByID = async (id: string): Promise <any | undefined> => {
         let userModel = userEntity();
         
         //Search all users
-        return await userModel.findById(id) .select('email name age')
+        return await userModel.findById(id) .select('email name age katas')
     } catch (error) {
         LogError(`[ORM error]: Getting user id: ${error}`)
     }
@@ -68,6 +70,7 @@ export const deleteUserByID = async (id: string): Promise <any | undefined> => {
     }
 }
 
+/*  USER CREATE SE VA A IR A AUTH
 export const createUser = async (user:any): Promise <any | undefined> => {
     try {
         //traer el modelo
@@ -79,7 +82,7 @@ export const createUser = async (user:any): Promise <any | undefined> => {
         LogError(`[ORM error]: Creating user id: ${error}`)
     }
 }
-
+*/
 
 export const updateUserByID = async (id: string, user:any): Promise <any | undefined> => {
     try {
@@ -147,6 +150,35 @@ export const logoutUser = async (): Promise <any | undefined> => {
 
     } catch (error) {
        
+    }
+}
+
+
+export const getKatasUser = async ( page: number, limit:  number, id: string): Promise <any []| undefined> => {
+    try {
+        let userModel = userEntity();
+        let katasModel = kataEntity();
+        //let katasFound : IKata[] = []
+ 
+        let response : any = {}
+       
+        userModel.findById(id).then((user) =>{
+            response.user.name = user.name;
+            response.user.email = user.email;
+
+            //buscar id dentro de user.katas y retorna promesa de katas
+            katasModel.find({"_id": {"$in": user.katas}}).then((katas: IKata[]) =>{
+                response.katas = katas
+            })
+
+        }).catch((error) => {
+            LogError(`[ORM] Error Getting User in Katas- ${error}`)
+        })
+
+            return response
+      
+    } catch (error) {
+        LogError(`[ORM error]: Getting all users: ${error}`)
     }
 }
 

@@ -185,5 +185,17 @@ VIDEO 8 --- Paginacion con mongoose
 
 VIDEO 9 --- Gestion de Relaciones Mongoose
 - "Katas" cada usuario podra crear uno , es un nuevo schema de mongoose 
-- Crear entity /domain (Kata.entity.ts)
-- Crear interface /interfaces (Kata.interface.ts)    -> dentro crea un Kata enum (enum son valores predefinidos, si no le das = su valor es 0,1,2)
+    - Crear entity /domain (Kata.entity.ts)
+    - Crear interface /interfaces (Kata.interface.ts)    -> dentro crea un Kata enum (enum son valores predefinidos, si no le das = su valor es 0,1,2)
+    - Crear orm Kata.orm ( CRUD )
+
+    - Crear interface de controller /interfaces/index.ts IKataController
+    -Crear katas controller
+    -Crear router kata
+
+// Buscar katas por id por author 
+    -controller/interface agregar en IKataController (getallkatasbyuser)
+    - agregar getKatasByUser en interface IUserController
+    - crear controller en userscontroller (getKatas)
+    - crear el orm en User.ornm (getKatasUser)
+    - cambiar la entity de user y agregar el campo katas

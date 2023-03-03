@@ -92,6 +92,22 @@ usersRouter.route('/')
     })
 
 
-
+    usersRouter.route('/katas')
+        .get(verifyToken, async (req: Request, res: Response) =>{
+            let id: any = req?.query?.id;
+            //pagination
+            let page: any = req?.query?.page || 1;
+            let limit: any = req?.query?.limit || 10;
+            LogInfo(`Query Param ${id}`);
+            
+            //Controller Instance to execute method
+            const controller: UserController = new UserController();
+    
+            //obtain response
+            const response: any = await  controller.getKatas(page, limit , id)
+    
+            //send res to client
+            return res.status(200).send(response)
+        })
 
     export default usersRouter;

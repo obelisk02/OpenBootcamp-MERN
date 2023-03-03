@@ -18,6 +18,6 @@ export const kataEntity = () => {
         }
     )
 
-    return mongoose.models.Users || mongoose.model<IKata>('Katas',kataSchema) //si existe un modelo Users
+    return mongoose.models.Katas || mongoose.model<IKata>('Katas',kataSchema) //si existe un modelo Users
 }
 

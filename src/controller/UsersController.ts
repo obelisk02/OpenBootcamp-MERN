@@ -3,14 +3,12 @@ import { IUserController } from "./interfaces";
 import { LogSuccess, LogError, LogWarning  } from "../utils/loggers";
 
 //ORM - Users
-import { getAllUsers, getUserByID, deleteUserByID, createUser, updateUserByID} from "../domain/orm/User.orm";
+import { getAllUsers, getUserByID, deleteUserByID, updateUserByID, getKatasUser} from "../domain/orm/User.orm";
 
 @Route("/api/users")
 @Tags("UserController")
 export class UserController implements IUserController {
-  
-  
-
+    
     /**
      * @param {number} page numero de pagina
      * @param {number} limit limite de articulos por pagina
@@ -117,6 +115,35 @@ export class UserController implements IUserController {
 
         return response;
         
+    }
+
+/**
+ * 
+ * @param {string} id of author katas
+ * @returns katas of user
+ */
+    @Get("/katas")
+    public async getKatas(@Query() page: number , limit: number, id: string): Promise<any> {
+        let response: any = ""
+
+
+        if(id){
+            LogSuccess(`[/api/users/katas] Get katas by user id - ${id}`)
+            response = await getKatasUser(page, limit, id);
+        }
+        else {
+            LogSuccess("[/api/users/katas] Get katas - no id")
+            response = {
+                message: "ID for user not found"
+            }
+        }
+
+            
+            
+
+    
+
+        return response;
     }
    
 }

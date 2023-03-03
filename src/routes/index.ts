@@ -9,6 +9,7 @@ import helloRouter from './HelloRouter';
 import usersRouter from './UserRouter';
 import authRouter from './AuthRouter';
 import { LogInfo } from '../utils/loggers';
+import katasRouter from './KataRouter';
 
 
 // instancia del server 
@@ -30,6 +31,7 @@ server.use('/', rootRouter);        // local/api/
 server.use('/hello', helloRouter)   // local/api/hello  --> HelloRouter.ts
 server.use('/users', usersRouter)   // local/api/users  --> usersRouter.ts
 server.use('/auth', authRouter)     // local/api/auth --> authRouter.ts
+server.use('/katas', katasRouter)     // local/api/katas --> katasRouter.ts
 
 
 export default server

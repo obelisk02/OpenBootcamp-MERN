@@ -29,7 +29,8 @@ authRouter.route('/register')
                 name,
                 password: hashedPassword,
                 email,
-                age
+                age,
+                katas: []
             }
             const controller: AuthController = new AuthController();
             const response: any = await controller.registerUser(newUser);

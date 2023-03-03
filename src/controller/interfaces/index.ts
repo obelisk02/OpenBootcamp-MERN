@@ -1,4 +1,5 @@
 
+import { IKata } from "../../domain/interfaces/Kata.interface";
 import { IUser } from "../../domain/interfaces/IUser.interface";
 import { BasicResponse } from "../types";
 
@@ -22,6 +23,9 @@ export interface IUserController {
     //createUser(user: any): Promise <any>
 
     updateUser(id: string, user: any): Promise <any>
+
+    //get katas by user
+    getKatas(page?: number , limit?: number, id?: string): Promise <any>
 }
 
 
@@ -29,4 +33,20 @@ export interface IAuthController {
     registerUser(user: IUser): Promise <any>
 
     loginUser (auth: any): Promise <any>    
+}
+
+export interface IKataController {
+
+    getKatas(page?: number , limit?: number, id?: string): Promise<any>
+    
+    //create
+    createKata(kata: IKata): Promise <any>
+
+    //DElete  by id
+    deleteKata(id: string): Promise <any>
+
+    updateKata(id: string, kata: IKata): Promise <any>
+
+    //get all katas by user
+
 }

@@ -9,7 +9,7 @@ export const userEntity = () => {
             email: {type: String, required: true},
             password: {type: String, required: true},
             age: { type: Number, required: true},
-            
+            katas: { type: [], requeried: true}
         }
     )
 
