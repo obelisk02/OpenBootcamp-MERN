@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import { UserResponse } from "../types/UserResponse";
 import { kataEntity } from "../entities/Kata.entity";
 import { IKata } from "../interfaces/Kata.interface";
+import mongoose from "mongoose";
 dotenv.config()
 
 const SECRET_JTW = process.env.SECRET_JWT || 'ENCRYPTTEXT123';
@@ -158,27 +159,46 @@ export const getKatasUser = async ( page: number, limit:  number, id: string): P
     try {
         let userModel = userEntity();
         let katasModel = kataEntity();
-        //let katasFound : IKata[] = []
+        let katasFound:IKata [] = []
  
-        let response : any = {}
-       
-        userModel.findById(id).then((user) =>{
-            response.user.name = user.name;
-            response.user.email = user.email;
+        let response : any = {
+            katas: []
+        }
 
+       
+        await userModel.findById(id).then(async (user) =>{
+            response.user = user.email;
+           
+           
             //buscar id dentro de user.katas y retorna promesa de katas
-            katasModel.find({"_id": {"$in": user.katas}}).then((katas: IKata[]) =>{
-                response.katas = katas
+
+            //create types to search
+           let objectIds: mongoose.Types.ObjectId [] = [];
+           user.katas.forEach( (kataID: string) => {
+                let objectsId = new mongoose.Types.ObjectId(kataID);
+                objectIds.push(objectsId)
+           });
+
+           await katasModel.find({"_id": {"$in": objectIds}}).then((katas: IKata[]) =>{
+                katasFound = katas
             })
 
+            response.katas = katasFound
+           
+            
         }).catch((error) => {
             LogError(`[ORM] Error Getting User in Katas- ${error}`)
+            response = {
+                message: "Error User katas"
+            }
         })
 
-            return response
-      
+           
+        return response
     } catch (error) {
         LogError(`[ORM error]: Getting all users: ${error}`)
     }
+
+  
 }
 
